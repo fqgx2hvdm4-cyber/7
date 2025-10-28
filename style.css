@@ -73,6 +73,24 @@ section h2 { font-size: 1.15rem; margin: 0 0 12px; color: var(--accent); }
 #slider-range .ui-slider-handle { top: -6px; width: 24px; height: 24px; border-radius: 50%; border: 3px solid #fff;
   box-shadow: 0 6px 18px rgba(80,60,30,0.18); background: var(--accent-plain); }
 
+#photo-slider { width: 100%; max-width: 640px; margin: 12px 0 0; height: 10px; border-radius: 10px; }
+#photo-slider .ui-slider-range { border-radius: 8px; background: linear-gradient(90deg, var(--accent-plain), #a77c4a); }
+#photo-slider .ui-slider-handle { top: -6px; width: 24px; height: 24px; border-radius: 50%; border: 3px solid #fff;
+  box-shadow: 0 6px 18px rgba(80,60,30,0.18); background: var(--accent-plain); }
+
+.photo-container {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.photo-container img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 2px solid var(--accent-light);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
 .ui-tooltip { padding: 8px 10px; font-size: 0.95rem; border-radius: 6px; box-shadow: 0 8px 22px rgba(0,0,0,0.12); }
 
 @media (max-width: 720px) {
