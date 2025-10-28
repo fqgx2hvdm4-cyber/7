@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лабораторна jQuery UI — коричнево-блакитна тема</title>
+
+  <!-- jQuery UI CSS -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <!-- Кастомне CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <h1>Лабораторна робота jQuery UI</h1>
+
+    <!-- ---------- Menu ---------- -->
+    <section>
+      <h2>Menu — випадне меню</h2>
+      <ul id="simple-menu" class="ui-menu" role="menu">
+        <li role="menuitem"><a href="#">Головна</a></li>
+        <li role="menuitem"><a href="#">Розділи</a>
+          <ul>
+            <li role="menuitem"><a href="#">Аккордеон</a></li>
+            <li role="menuitem"><a href="#">Календар</a></li>
+            <li role="menuitem"><a href="#">Слайдер</a></li>
+          </ul>
+        </li>
+        <li role="menuitem"><a href="#" id="contact-btn">Контакти</a></li>
+      </ul>
+      <p class="muted">Наведи на кнопку "Контакти" щоб побачити випадковий номер телефону.</p>
+    </section>
+
+    <!-- ---------- Accordion ---------- -->
+    <section>
+      <h2>Accordion — розгортання/згортання</h2>
+      <div id="accordion">
+        <h3>Розділ 1</h3>
+        <div>
+          <p>Текст 1 мін бути тут.</p>
+        </div>
+        <h3>Розділ 2</h3>
+        <div>
+          <p>Текст 2 мін бути тут.</p>
+        </div>
+        <h3>Розділ 3</h3>
+        <div>
+          <p>Текст 3 мін бути тут.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Tabs ---------- -->
+    <section>
+      <h2>Tabs — вкладки</h2>
+      <div id="tabs">
+        <ul>
+          <li><a href="#tab-1">Вкладка 1</a></li>
+          <li><a href="#tab-2">Вкладка 2</a></li>
+          <li><a href="#tab-3">Вкладка 3</a></li>
+        </ul>
+        <div id="tab-1">
+          <p>Текст 1 мін бути тут.</p>
+        </div>
+        <div id="tab-2">
+          <p>Текст 2 мін бути тут.</p>
+        </div>
+        <div id="tab-3">
+          <p>Текст 3 мін бути тут.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Datepicker & Tooltip ---------- -->
+    <section>
+      <h2>Datepicker & Tooltip</h2>
+      <label for="datepicker">Оберіть дату:</label>
+      <input title="Клацни, щоб вибрати дату" type="text" id="datepicker" placeholder="дд.мм.рррр">
+
+      <p style="margin-top:12px;">
+        Наведи на цей <span id="info" title="Це підказка Tooltip від jQuery UI">текст</span> — побачиш tooltip.
+      </p>
+    </section>
+
+    <!-- ---------- Slider ---------- -->
+    <section>
+      <h2>Slider — вибір числа</h2>
+      <p>Вибране число: <span id="slider-value">50</span></p>
+      <div id="slider-range"></div>
+      <p class="muted">Slider має опцію animate та step.</p>
+    </section>
+
+  </div> <!-- /container -->
+
+  <!-- jQuery та jQuery UI -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+  <!-- Ініціалізація плагінів -->
+  <script>
+    $(function() {
+      /* Menu */
+      $("#simple-menu").menu({
+        position: { my: "left top", at: "left bottom" },
+        icons: { submenu: "ui-icon-carat-1-e" }
+      });
+
+      /* Accordion */
+      $("#accordion").accordion({
+        collapsible: true,
+        active: false,
+        heightStyle: "content",
+        animate: 180
+      });
+
+      /* Tabs */
+      $("#tabs").tabs({
+        active: 0,
+        collapsible: false,
+        show: { effect: "fadeIn", duration: 200 },
+        hide: { effect: "fadeOut", duration: 150 }
+      });
+
+      /* Datepicker */
+      $("#datepicker").datepicker({
+        dateFormat: "dd.mm.yy",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "2000:2030",
+        showAnim: "slideDown"
+      });
+
+      /* Tooltip */
+      $(document).tooltip({
+        track: true,
+        show: { effect: "fadeIn", duration: 120 },
+        hide: { effect: "fadeOut", duration: 80 }
+      });
+
+      /* Slider */
+      $("#slider-range").slider({
+        range: "min",
+        value: 50,
+        min: 0,
+        max: 100,
+        step: 1,
+        animate: 200,
+        slide: function(event, ui) {
+          $("#slider-value").text(ui.value);
+        }
+      });
+      $("#slider-value").text($("#slider-range").slider("value"));
+
+      /* Контакти — випадковий телефон */
+      function getRandomPhone() {
+        const prefixes = ["67","68","96","97","98","50","66","95","99"];
+        const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+        const part1 = Math.floor(Math.random() * 900 + 100);
+        const part2 = Math.floor(Math.random() * 90 + 10);
+        const part3 = Math.floor(Math.random() * 90 + 10);
+        return `+380 ${prefix} ${part1} ${part2} ${part3}`;
+      }
+
+      $("#contact-btn").tooltip({
+        content: function() {
+          return getRandomPhone();
+        },
+        show: { effect: "fadeIn", duration: 150 },
+        hide: { effect: "fadeOut", duration: 100 },
+        track: true
+      });
+    });
+  </script>
+</body>
+</html>
