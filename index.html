@@ -28,9 +28,8 @@
             <li role="menuitem"><a href="#">Слайдер</a></li>
           </ul>
         </li>
-        <li role="menuitem"><a href="#" id="contact-btn">Контакти</a></li>
       </ul>
-      <p class="muted">Наведи на кнопку "Контакти" щоб побачити випадковий номер телефону.</p>
+      <p class="muted">Меню можна налаштувати через опції jQuery UI Menu.</p>
     </section>
 
     <!-- ---------- Accordion ---------- -->
@@ -39,15 +38,15 @@
       <div id="accordion">
         <h3>Розділ 1</h3>
         <div>
-          <p>Текст 1 мін бути тут.</p>
+          <p>Міг бути текст 1.</p>
         </div>
         <h3>Розділ 2</h3>
         <div>
-          <p>Текст 2 мін бути тут.</p>
+          <p>Міг бути текст 2.</p>
         </div>
         <h3>Розділ 3</h3>
         <div>
-          <p>Текст 3 мін бути тут.</p>
+          <p>Міг бути текст 3.</p>
         </div>
       </div>
     </section>
@@ -62,13 +61,13 @@
           <li><a href="#tab-3">Вкладка 3</a></li>
         </ul>
         <div id="tab-1">
-          <p>Текст 1 мін бути тут.</p>
+          <p>Міг бути текст 1.</p>
         </div>
         <div id="tab-2">
-          <p>Текст 2 мін бути тут.</p>
+          <p>Міг бути текст 2.</p>
         </div>
         <div id="tab-3">
-          <p>Текст 3 мін бути тут.</p>
+          <p>Міг бути текст 3.</p>
         </div>
       </div>
     </section>
@@ -84,12 +83,22 @@
       </p>
     </section>
 
-    <!-- ---------- Slider ---------- -->
+    <!-- ---------- Slider чисел ---------- -->
     <section>
       <h2>Slider — вибір числа</h2>
       <p>Вибране число: <span id="slider-value">50</span></p>
       <div id="slider-range"></div>
       <p class="muted">Slider має опцію animate та step.</p>
+    </section>
+
+    <!-- ---------- Slider фото ---------- -->
+    <section>
+      <h2>Slider — перегляд фото</h2>
+      <p>Вибране фото: <span id="photo-index">1</span> / 5</p>
+      <div id="photo-slider"></div>
+      <div class="photo-container">
+        <img id="photo-display" src="https://picsum.photos/400/200?random=1" alt="Фото 1">
+      </div>
     </section>
 
   </div> <!-- /container -->
@@ -98,7 +107,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
-  <!-- Ініціалізація плагінів -->
+  <!-- JS Ініціалізація -->
   <script>
     $(function() {
       /* Menu */
@@ -139,7 +148,7 @@
         hide: { effect: "fadeOut", duration: 80 }
       });
 
-      /* Slider */
+      /* Slider чисел */
       $("#slider-range").slider({
         range: "min",
         value: 50,
@@ -153,23 +162,25 @@
       });
       $("#slider-value").text($("#slider-range").slider("value"));
 
-      /* Контакти — випадковий телефон */
-      function getRandomPhone() {
-        const prefixes = ["67","68","96","97","98","50","66","95","99"];
-        const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-        const part1 = Math.floor(Math.random() * 900 + 100);
-        const part2 = Math.floor(Math.random() * 90 + 10);
-        const part3 = Math.floor(Math.random() * 90 + 10);
-        return `+380 ${prefix} ${part1} ${part2} ${part3}`;
-      }
+      /* Slider фото */
+      const photos = [
+        "https://picsum.photos/400/200?random=1",
+        "https://picsum.photos/400/200?random=2",
+        "https://picsum.photos/400/200?random=3",
+        "https://picsum.photos/400/200?random=4",
+        "https://picsum.photos/400/200?random=5"
+      ];
 
-      $("#contact-btn").tooltip({
-        content: function() {
-          return getRandomPhone();
-        },
-        show: { effect: "fadeIn", duration: 150 },
-        hide: { effect: "fadeOut", duration: 100 },
-        track: true
+      $("#photo-slider").slider({
+        min: 1,
+        max: photos.length,
+        value: 1,
+        step: 1,
+        animate: 200,
+        slide: function(event, ui) {
+          $("#photo-display").attr("src", photos[ui.value - 1]);
+          $("#photo-index").text(ui.value);
+        }
       });
     });
   </script>
